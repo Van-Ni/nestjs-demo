@@ -1,10 +1,21 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, NestMiddleware } from '@nestjs/common';
+import { Request, Response, NextFunction } from 'express';
 import { InjectModel } from '@nestjs/mongoose';
 import { Book } from './book.schema';
 import mongoose from 'mongoose';
 
 @Injectable()
-export class BookService {
+export class BookService implements NestMiddleware {
+    use(req: Request, res: Response, next: NextFunction) {
+        console.log(`Incoming request - Method: ${req.method}, URL: ${req.url}`);
+
+        // Kiểm tra xác thực tại đây
+        if (!req.headers.authorization) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+        next();
+    }
+
     constructor(
         @InjectModel(Book.name)
         private bookModel: mongoose.Model<Book>,
