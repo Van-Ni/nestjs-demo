@@ -8,19 +8,23 @@ export class AuthController {
     constructor(private readonly authService: AuthService) { }
 
     @Post('register')
-    async register(registerDto: RegisterDto): Promise<any> {
+    async register(
+        @Body()
+        registerDto: RegisterDto
+    ): Promise<any> {
         const user = await this.authService.register(registerDto);
         return { message: 'Registration successful', user };
     }
 
     @Post('login')
-    async login(loginDto: LoginDto): Promise<any> {
+    async login(@Body() body: { email: string, password: string }): Promise<any> {
 
-        const {email, password} = loginDto
-        
-        const user = await this.authService.login(email, password);
+        const { email, password } = body;
+        const user = await this.authService.validateUser(email, password);
+
         if (user) {
-            return { message: 'Login successful', user };
+            const token = await this.authService.login(user);
+            return { message: 'Login successful', token };
         } else {
             return { message: 'Invalid email or password' };
         }

@@ -9,8 +9,6 @@ import { BookSchema } from './book.schema';
   controllers: [BookController],
   providers: [BookService]
 })
-export class BookModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(BookService).forRoutes('*');
-  }
+export class BookModule {
+
 }

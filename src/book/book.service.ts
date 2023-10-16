@@ -5,17 +5,7 @@ import { Book } from './book.schema';
 import mongoose from 'mongoose';
 
 @Injectable()
-export class BookService implements NestMiddleware {
-    use(req: Request, res: Response, next: NextFunction) {
-        console.log(`Incoming request - Method: ${req.method}, URL: ${req.url}`);
-
-        // Kiểm tra xác thực tại đây
-        if (!req.headers.authorization) {
-            return res.status(401).json({ message: 'Unauthorized' });
-        }
-        next();
-    }
-
+export class BookService {
     constructor(
         @InjectModel(Book.name)
         private bookModel: mongoose.Model<Book>,
