@@ -8,7 +8,7 @@ import {
     Param,
     Post,
     Put,
-  } from '@nestjs/common';
+} from '@nestjs/common';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 @Controller('book')
@@ -34,6 +34,11 @@ export class BookController {
         id: string,
     ): Promise<Book> {
         return this.bookService.findById(id);
+    }
+
+    @Get('category/:categoryId')
+    async getBooksByCategoryId(@Param('categoryId') categoryId: string) {
+        return this.bookService.getBooksByCategoryId(categoryId);
     }
 
     @Put(':id')

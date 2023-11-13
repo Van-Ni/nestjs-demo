@@ -5,4 +5,6 @@ export class UpdateBookDto {
   readonly author: string;
   readonly price: number;
   readonly category: any;
+  readonly images: string;
+  readonly review: any;
 }
