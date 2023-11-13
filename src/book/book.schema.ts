@@ -18,8 +18,7 @@ export class Book {
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Category' })
   category: MongooseSchema.Types.ObjectId;
 
-  @Prop({ type: [{ url: String, description: String }] })
-  images: { url: string }[];
+  images: string;
 
   @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Review' }] })
   reviews: MongooseSchema.Types.ObjectId[];
