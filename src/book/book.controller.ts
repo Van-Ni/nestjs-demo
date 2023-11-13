@@ -37,6 +37,11 @@ export class BookController {
         return this.bookService.findById(id);
     }
 
+    @Get('category/:categoryId')
+    async getBooksByCategoryId(@Param('categoryId') categoryId: string) {
+        return this.bookService.getBooksByCategoryId(categoryId);
+    }
+
     @Put(':id')
     async updateBook(
         @Param('id')

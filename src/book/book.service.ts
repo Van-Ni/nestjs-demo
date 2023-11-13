@@ -30,6 +30,14 @@ export class BookService {
         return book;
     }
 
+    async getBooksByCategoryId(categoryId: string): Promise<Book[]> {
+        const books = await this.bookModel.find({ category: categoryId }).exec();
+        return books;
+    } async findByCategoryName(categoryName: string): Promise<Book[]> {
+        const books = await this.bookModel.find({ category: categoryName }).exec();
+        return books;
+    }
+
     async updateById(id: string, book: Book): Promise<Book> {
         return await this.bookModel.findByIdAndUpdate(id, book, {
             new: true,
