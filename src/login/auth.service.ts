@@ -20,9 +20,9 @@ export class AuthService {
     async validateUser(email: string, password: string): Promise<any> {
         const user = await this.userModel.findOne({ email: email }).exec();
 
-        if(!user){
+        if (!user) {
             throw new Error("User not found");
-        } 
+        }
         if (user && user.password === password) {
             // Người dùng xác thực thành công
             const { password, ...result } = user.toObject(); // Loại bỏ mật khẩu khỏi kết quả trả về
@@ -34,9 +34,11 @@ export class AuthService {
     }
 
     async login(user: User): Promise<any> {
-        const payload = { email: user.email, password: user.password }
+        const payload = { email: user.email, role: user.role }
+        console.log("payload",payload);
+        const access_token = this.jwtService.sign(payload, { secret: 'nestjs-secret-key', expiresIn: '1h' });
         return {
-            access_token: this.jwtService.sign(payload),
-        }
+            access_token,
+        };
     }
 }

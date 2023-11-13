@@ -1,3 +1,4 @@
+import { RoleMiddleware } from 'src/login/role.middleware';
 import { Book } from './book.schema';
 import { BookService } from './book.service';
 import {
@@ -8,9 +9,9 @@ import {
     Param,
     Post,
     Put,
-} from '@nestjs/common';
-import { CreateBookDto } from './dto/create-book.dto';
-import { UpdateBookDto } from './dto/update-book.dto';
+    UseGuards,
+  } from '@nestjs/common';
+
 @Controller('book')
 export class BookController {
     constructor(private bookService: BookService) { }
