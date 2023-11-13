@@ -23,7 +23,7 @@ export class BookController {
     @Post()
     async createBook(
         @Body()
-        book: CreateBookDto,
+        book: any,
     ): Promise<Book> {
         return this.bookService.create(book);
     }
@@ -41,7 +41,7 @@ export class BookController {
         @Param('id')
         id: string,
         @Body()
-        book: UpdateBookDto,
+        book: any,
     ): Promise<Book> {
         return this.bookService.updateById(id, book);
     }

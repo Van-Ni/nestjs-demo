@@ -20,6 +20,9 @@ export class AuthService {
     async validateUser(email: string, password: string): Promise<any> {
         const user = await this.userModel.findOne({ email: email }).exec();
 
+        if(!user){
+            throw new Error("User not found");
+        } 
         if (user && user.password === password) {
             // Người dùng xác thực thành công
             const { password, ...result } = user.toObject(); // Loại bỏ mật khẩu khỏi kết quả trả về

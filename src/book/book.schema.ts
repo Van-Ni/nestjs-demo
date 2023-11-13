@@ -1,15 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document, Schema as MongooseSchema } from 'mongoose';
 
-export enum Category {
-  ADVENTURE = 'Adventure',
-  CALSSICS = 'Classics',
-  CRIME = 'Crime',
-  FANTASY = 'Fantasy',
-}
-
-@Schema({
-  timestamps: true,
-})
+@Schema({ timestamps: true })
 export class Book {
   @Prop()
   title: string;
@@ -23,8 +15,15 @@ export class Book {
   @Prop()
   price: number;
 
-  @Prop()
-  category: Category;
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Category' })
+  category: MongooseSchema.Types.ObjectId;
+
+  @Prop({ type: [{ url: String, description: String }] })
+  images: { url: string }[];
+
+  @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Review' }] })
+  reviews: MongooseSchema.Types.ObjectId[];
 }
 
+export type BookDocument = Book & Document;
 export const BookSchema = SchemaFactory.createForClass(Book);
